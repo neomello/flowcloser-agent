@@ -93,17 +93,20 @@ npm start
 ## 🌐 Endpoints da API
 
 ### Webhook Instagram (GET)
+
 - **URL**: `/api/webhook/instagram`
 - **Método**: GET
 - **Descrição**: Verificação do webhook do Instagram Business API
 - **Query params**: `hub.mode`, `hub.verify_token`, `hub.challenge`
 
 ### Webhook Instagram (POST)
+
 - **URL**: `/api/webhook/instagram`
 - **Método**: POST
 - **Descrição**: Recebe eventos do Instagram (mensagens, etc.)
 
 ### OAuth Callback Instagram
+
 - **URL**: `/api/auth/instagram/callback`
 - **Método**: GET
 - **Descrição**: Callback para autenticação OAuth do Instagram
@@ -135,6 +138,7 @@ flowcloser_adk-ts/
 O projeto está configurado para deploy no Railway:
 
 1. **Instale o Railway CLI**:
+
 ```bash
 npm i -g @railway/cli
 ```
@@ -150,11 +154,16 @@ railway init
 ```
 
 4. **Configure as variáveis de ambiente** no dashboard do Railway ou via CLI:
+
 ```bash
-railway variables set IQAI_API_KEY=sua_chave
-railway variables set OPENAI_API_KEY=sua_chave
-# ... outras variáveis
+railway variables --set "IQAI_API_KEY=sua_chave" --set "OPENAI_API_KEY=sua_chave" --set "GOOGLE_API_KEY=sua_chave"
+railway variables --set "LLM_MODEL=gpt-4o-mini" --set "PORT=8042"
+railway variables --set "WEBHOOK_VERIFY_TOKEN=flowcloser_webhook_neo"
+railway variables --set "INSTAGRAM_APP_ID=seu_app_id" --set "INSTAGRAM_APP_SECRET=seu_app_secret"
+railway variables --set "INSTAGRAM_REDIRECT_URI=https://seu-dominio.up.railway.app/api/auth/instagram/callback"
 ```
+
+**Nota:** Você pode definir múltiplas variáveis em um único comando usando múltiplos `--set`, ou definir uma por vez.
 
 5. **Faça deploy**:
 ```bash
