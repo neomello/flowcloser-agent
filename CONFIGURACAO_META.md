@@ -68,6 +68,18 @@
      ```
 5. Clique em **Salvar Alterações**
 
+### 5. Configurar Data Deletion Request URL (OBRIGATÓRIO)
+
+1. Ainda em **Configurações** → **Básico**
+2. Role até **Data Deletion Request URL**
+3. Adicione:
+   ```
+   https://flowcloser-agent-production.up.railway.app/api/data-deletion
+   ```
+4. Clique em **Salvar Alterações**
+
+**Nota:** Este endpoint permite que usuários solicitem exclusão de seus dados quando removem o app. Veja `DATA_DELETION_SETUP.md` para mais detalhes.
+
 ### 5. Configurar Permissões do Instagram
 
 1. Vá em **Produtos** → **Instagram** → **Permissões**

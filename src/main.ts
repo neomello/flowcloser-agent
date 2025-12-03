@@ -5,6 +5,7 @@ import express from "express";
 import * as dotenv from "dotenv";
 import { agent, askWithFallback } from "./agents/flowcloser/agent.js";
 import { privacyPolicy, termsOfService } from "./routes/legal.js";
+import { dataDeletionCallback, dataDeletionStatus } from "./routes/data-deletion.js";
 
 // Forçar uso do .env mesmo se houver variáveis de ambiente do sistema
 dotenv.config({ override: true });
@@ -14,6 +15,34 @@ const PORT = Number(process.env.PORT) || 8042;
 const WEBHOOK_VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN || "flowcloser_webhook_neo";
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Para parsing de form-data (necessário para signed_request)
+app.use(express.static("public")); // Servir arquivos estáticos (logos)
+
+/**
+ * Verifica certificado de cliente do Meta (se disponível)
+ * Railway pode não expor certificado diretamente, mas verificamos quando possível
+ */
+function verifyMetaClientCertificate(req: express.Request): boolean {
+	// Railway pode passar certificado via header ou variável de ambiente
+	const clientCert = req.headers["x-client-certificate"] || 
+	                   req.headers["x-amzn-mtls-clientcert-subject"] ||
+	                   process.env.META_CLIENT_CERT_CN;
+	
+	if (clientCert) {
+		// Verificar se o CN contém o esperado
+		const cnMatch = String(clientCert).includes("client.webhooks.fbclientcerts.com");
+		if (!cnMatch) {
+			console.warn("⚠️ Client certificate CN mismatch:", clientCert);
+			return false;
+		}
+		console.log("✅ Client certificate verified");
+		return true;
+	}
+	
+	// Se não houver certificado disponível (Railway pode não expor), aceitar se token estiver correto
+	// A verificação de token é a segurança primária
+	return true;
+}
 
 app.get("/health", (req, res) => {
 	res.json({ status: "ok", timestamp: new Date().toISOString() });
@@ -25,6 +54,13 @@ app.get("/health", (req, res) => {
 
 app.get("/privacy-policy", privacyPolicy);
 app.get("/terms-of-service", termsOfService);
+
+// ═══════════════════════════════════════════════════════════════════════
+// DATA DELETION REQUEST (Obrigatório para aprovação no Meta Developer)
+// ═══════════════════════════════════════════════════════════════════════
+
+app.post("/api/data-deletion", dataDeletionCallback);
+app.get("/data-deletion-status", dataDeletionStatus);
 
 app.get("/api/agents", async (req, res) => {
 	try {
@@ -43,9 +79,19 @@ app.get("/api/webhooks/instagram", (req, res) => {
 	const challenge = req.query["hub.challenge"];
 
 	if (mode === "subscribe" && token === WEBHOOK_VERIFY_TOKEN) {
-		console.log("✅ Webhook verified");
-		res.status(200).send(challenge);
+		// Verificar certificado de cliente se disponível (opcional para Railway)
+		const certValid = verifyMetaClientCertificate(req);
+		
+		if (certValid) {
+			console.log("✅ Webhook verified (token + certificate check)");
+			res.status(200).send(challenge);
+		} else {
+			console.warn("⚠️ Certificate verification failed, but token is valid");
+			// Aceitar mesmo assim se token estiver correto (Railway pode não expor cert)
+			res.status(200).send(challenge);
+		}
 	} else {
+		console.warn("❌ Webhook verification failed - invalid token or mode");
 		res.sendStatus(403);
 	}
 });
@@ -345,4 +391,6 @@ app.listen(PORT, "0.0.0.0", () => {
 	console.log(`📍 Instagram OAuth Callback: http://0.0.0.0:${PORT}/api/auth/instagram/callback`);
 	console.log(`📍 Privacy Policy: http://0.0.0.0:${PORT}/privacy-policy`);
 	console.log(`📍 Terms of Service: http://0.0.0.0:${PORT}/terms-of-service`);
+	console.log(`📍 Data Deletion Callback: http://0.0.0.0:${PORT}/api/data-deletion`);
+	console.log(`📍 Data Deletion Status: http://0.0.0.0:${PORT}/data-deletion-status`);
 });

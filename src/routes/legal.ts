@@ -61,10 +61,31 @@ export function privacyPolicy(req: Request, res: Response): void {
             font-size: 14px;
             margin-top: 40px;
         }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+            margin: 10px 20px;
+        }
+        .logo-agencia {
+            max-width: 150px;
+        }
+        .logo-app {
+            max-width: 180px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="logo-container">
+            <img src="/images/flowoff_logo.png" alt="FlowOff Logo" class="logo-agencia">
+            <img src="/images/NEOFLOW.png" alt="NEOFLOW Logo" class="logo-app">
+        </div>
         <h1>Política de Privacidade - FlowCloser</h1>
         <p class="update-date">Última atualização: ${currentDate}</p>
         
@@ -116,7 +137,14 @@ export function privacyPolicy(req: Request, res: Response): void {
             <li>Retirar seu consentimento a qualquer momento</li>
             <li>Optar por não receber comunicações de marketing</li>
         </ul>
-        <p>Para exercer esses direitos, entre em contato através do Instagram ou email: privacy@flowoff.xyz</p>
+        <p><strong>Para solicitar exclusão de seus dados:</strong></p>
+        <ul>
+            <li>Acesse suas configurações do Facebook: <a href="https://www.facebook.com/settings?tab=applications" target="_blank">Apps e Sites</a></li>
+            <li>Remova o aplicativo FlowCloser</li>
+            <li>Clique em "Enviar Solicitação" para solicitar a exclusão dos seus dados</li>
+            <li>Você receberá um código de confirmação e poderá acompanhar o status em: <a href="/data-deletion-status">Status de Exclusão de Dados</a></li>
+        </ul>
+        <p>Para outras solicitações, entre em contato através do Instagram ou email: privacy@flowoff.xyz</p>
         
         <h2>6. Segurança</h2>
         <p>Implementamos medidas de segurança para proteger suas informações, incluindo:</p>
@@ -237,10 +265,31 @@ export function termsOfService(req: Request, res: Response): void {
             font-size: 14px;
             margin-top: 40px;
         }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+            margin: 10px 20px;
+        }
+        .logo-agencia {
+            max-width: 150px;
+        }
+        .logo-app {
+            max-width: 180px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="logo-container">
+            <img src="/images/flowoff_logo.png" alt="FlowOff Logo" class="logo-agencia">
+            <img src="/images/NEOFLOW.png" alt="NEOFLOW Logo" class="logo-app">
+        </div>
         <h1>Termos de Serviço - FlowCloser</h1>
         <p class="update-date">Última atualização: ${currentDate}</p>
         
