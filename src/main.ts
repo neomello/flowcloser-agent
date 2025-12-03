@@ -1,3 +1,9 @@
+// Garantir que crypto esteja disponível globalmente (para @iqai/adk)
+import * as crypto from "node:crypto";
+if (typeof globalThis.crypto === "undefined") {
+	(globalThis as any).crypto = crypto;
+}
+
 import express from "express";
 import * as dotenv from "dotenv";
 import { agent, askWithFallback } from "./agents/flowcloser/agent.js";
