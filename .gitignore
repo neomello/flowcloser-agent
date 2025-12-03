@@ -7,3 +7,8 @@ data/
 .adk-cache
 .DS_Store
 
+# Arquivos com informações sensíveis
+railway-variables.json
+*_variables.json
+*secrets*.json
+
