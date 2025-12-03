@@ -1,8 +1,5 @@
-// Garantir que crypto esteja disponível globalmente (para @iqai/adk)
-import * as crypto from "node:crypto";
-if (typeof globalThis.crypto === "undefined") {
-	(globalThis as any).crypto = crypto;
-}
+// IMPORTAR PRIMEIRO - garante que crypto esteja disponível antes do @iqai/adk
+import "./crypto-polyfill.js";
 
 import express from "express";
 import * as dotenv from "dotenv";

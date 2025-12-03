@@ -3,6 +3,7 @@
 ## ✅ O que você JÁ TEM configurado (necessário)
 
 ### 1. **API Key** ✅
+
 - ✅ `OPENAI_API_KEY` configurada no `.env` e Railway
 - ✅ `OPENAI_ORG_ID` configurada (se usando projeto)
 - ✅ `OPENAI_PROJECT_ID` configurada (se usando projeto)
@@ -64,6 +65,7 @@
 - Se quisesse melhorar o modelo com dados específicos do seu domínio
 
 **Nota:** Pode ser útil no futuro para:
+
   - Avaliar performance do agente
   - Treinar com conversas reais bem-sucedidas
   - Melhorar respostas com exemplos específicos
@@ -87,6 +89,7 @@
 **NADA!** 🎉
 
 Tudo que você precisa já está configurado:
+
 - ✅ API Key funcionando
 - ✅ Modelo `gpt-4o` disponível
 - ✅ Projeto configurado corretamente

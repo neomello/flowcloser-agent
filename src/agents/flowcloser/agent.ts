@@ -1,3 +1,6 @@
+// IMPORTAR PRIMEIRO - garante que crypto esteja disponível antes do @iqai/adk
+import "../../crypto-polyfill.js";
+
 import {
 	AgentBuilder,
 	createDatabaseSessionService,
