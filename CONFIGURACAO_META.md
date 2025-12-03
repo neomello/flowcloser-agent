@@ -18,7 +18,11 @@
 ### 1. Acessar o Meta Developer Console
 
 1. Acesse: https://developers.facebook.com/apps/
-2. Selecione seu App (ID: `2706639773011042`)
+2. Selecione seu App:
+   - **App ID Principal:** `1338892407681784`
+   - **Instagram App ID:** `2706639773011042`
+   - **Instagram:** neoflowoff.eth
+   - **Nome do App:** flowcloser_webhook_neo-IG
 
 ### 2. Configurar Webhook do Instagram
 
@@ -29,8 +33,14 @@
    - **URL do Callback**: `https://flowcloser-agent-production.up.railway.app/api/webhooks/instagram`
    - **Token de Verificação**: `flowcloser_webhook_neo`
    - **Campos de Assinatura**: Marque `messages`
-5. Clique em **Verificar e Salvar**
-6. Meta vai fazer uma requisição GET para verificar - deve retornar sucesso ✅
+5. **Sobre Certificado de Cliente:**
+   - ⚠️ Meta pode pedir certificado de cliente (mTLS)
+   - Railway não suporta mTLS diretamente
+   - **Solução:** Configure sem certificado inicialmente (use token como segurança)
+   - O código já está preparado para verificar certificado quando disponível
+   - Veja `META_CLIENT_CERTIFICATE.md` para mais detalhes
+6. Clique em **Verificar e Salvar**
+7. Meta vai fazer uma requisição GET para verificar - deve retornar sucesso ✅
 
 ### 3. Configurar OAuth Redirect URI
 

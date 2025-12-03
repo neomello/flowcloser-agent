@@ -290,9 +290,18 @@ app.get("/api/webhooks/whatsapp", (req, res) => {
 	const challenge = req.query["hub.challenge"];
 
 	if (mode === "subscribe" && token === WEBHOOK_VERIFY_TOKEN) {
-		console.log("✅ WhatsApp webhook verified");
-		res.status(200).send(challenge);
+		// Verificar certificado de cliente se disponível
+		const certValid = verifyMetaClientCertificate(req);
+		
+		if (certValid) {
+			console.log("✅ WhatsApp webhook verified (token + certificate check)");
+			res.status(200).send(challenge);
+		} else {
+			console.warn("⚠️ Certificate verification failed, but token is valid");
+			res.status(200).send(challenge);
+		}
 	} else {
+		console.warn("❌ WhatsApp webhook verification failed - invalid token or mode");
 		res.sendStatus(403);
 	}
 });

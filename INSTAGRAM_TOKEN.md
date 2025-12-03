@@ -13,6 +13,7 @@ EAATBty5aMvgBQJ2TA3v1ZA9Wcz9UhxYOy52scwii3NNyZAptPzBijofPydBA7pKk4TOVtLBugFeaYJg
 ```
 
 **Permissões Concedidas:**
+
 - ✅ `ads_management`
 - ✅ `ads_read`
 - ✅ `manage_notifications`
