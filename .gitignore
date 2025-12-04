@@ -12,3 +12,10 @@ railway-variables.json
 *_variables.json
 *secrets*.json
 
+# Sistema MIO - Manter apenas localmente e no repo mio-system
+# Todo o conteúdo de infra/identities foi migrado para o repositório mio-system
+infra/identities/
+scripts/register-identity.sh
+scripts/list-identities.sh
+scripts/create-pr.sh
+
