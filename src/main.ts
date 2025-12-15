@@ -529,13 +529,32 @@ app.post("/api/webhooks/instagram", async (req, res) => {
 							// Enviar resposta de volta para o Instagram
 							await sendMetaMessage(account, senderId, responseText, pageId);
 
-							// Salvar interação mínima no storage local + IPFS
+							// Extrair dados do lead da mensagem
+							const { extractLeadDataFromMessage } = await import("./services/leads.js");
+							const leadData = extractLeadDataFromMessage(messageText);
+
+							// Calcular score baseado nos dados extraídos
+							const { computeLeadScore } = await import("./services/leads.js");
+							const score = computeLeadScore({
+								intent: leadData.intent,
+								timeline: leadData.urgency,
+								projectType: leadData.projectType,
+								urgency: leadData.urgency,
+							});
+
+							// Salvar interação com dados extraídos no storage local + IPFS
 							await recordLeadInteraction({
 								user_platform_id: senderId,
 								page_id: pageId,
 								platform,
 								account_name: account?.account_name || "unknown_account",
 								status: "contacted",
+								project_type: leadData.projectType || null,
+								urgency: leadData.urgency || null,
+								name: leadData.name || undefined,
+								company: leadData.company || undefined,
+								score: score,
+								qualified: score >= 60,
 							});
 						} catch (error) {
 							console.error("Error processing message:", error);
@@ -691,13 +710,32 @@ app.post("/api/webhooks/whatsapp", async (req, res) => {
 									// Enviar resposta via WhatsApp Cloud API
 									await sendWhatsAppTextMessage(senderId, responseText);
 
-									// Persistir interação mínima no storage local + IPFS
+									// Extrair dados do lead da mensagem
+									const { extractLeadDataFromMessage } = await import("./services/leads.js");
+									const leadData = extractLeadDataFromMessage(messageText);
+
+									// Calcular score baseado nos dados extraídos
+									const { computeLeadScore } = await import("./services/leads.js");
+									const score = computeLeadScore({
+										intent: leadData.intent,
+										timeline: leadData.urgency,
+										projectType: leadData.projectType,
+										urgency: leadData.urgency,
+									});
+
+									// Persistir interação com dados extraídos no storage local + IPFS
 									await recordLeadInteraction({
 										user_platform_id: senderId,
 										page_id: phoneNumberId,
 										platform: "whatsapp",
 										account_name: "whatsapp",
 										status: "contacted",
+										project_type: leadData.projectType || null,
+										urgency: leadData.urgency || null,
+										name: leadData.name || undefined,
+										company: leadData.company || undefined,
+										score: score,
+										qualified: score >= 60,
 									});
 								} catch (error) {
 									console.error("Error processing WhatsApp message:", error);
@@ -790,13 +828,32 @@ app.post("/api/webhooks/whatsapp/twilio", express.urlencoded({ extended: true })
 				// Enviar resposta via Twilio
 				await sendTwilioWhatsAppMessage(senderId, responseText);
 
-				// Persistir interação mínima no storage local + IPFS
+				// Extrair dados do lead da mensagem
+				const { extractLeadDataFromMessage } = await import("./services/leads.js");
+				const leadData = extractLeadDataFromMessage(messageBody);
+
+				// Calcular score baseado nos dados extraídos
+				const { computeLeadScore } = await import("./services/leads.js");
+				const score = computeLeadScore({
+					intent: leadData.intent,
+					timeline: leadData.urgency,
+					projectType: leadData.projectType,
+					urgency: leadData.urgency,
+				});
+
+				// Persistir interação com dados extraídos no storage local + IPFS
 				await recordLeadInteraction({
 					user_platform_id: senderId,
 					page_id: phoneNumberId,
 					platform: "whatsapp",
 					account_name: "twilio",
 					status: "contacted",
+					project_type: leadData.projectType || null,
+					urgency: leadData.urgency || null,
+					name: leadData.name || undefined,
+					company: leadData.company || undefined,
+					score: score,
+					qualified: score >= 60,
 				});
 			} catch (error) {
 				console.error("Error processing Twilio WhatsApp message:", error);
