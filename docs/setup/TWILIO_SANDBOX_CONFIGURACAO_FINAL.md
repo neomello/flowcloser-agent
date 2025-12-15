@@ -3,6 +3,7 @@
 ## 🎯 Status Atual
 
 ✅ Você já está conectado ao Sandbox!
+
 - Número do Sandbox: `whatsapp:+14155238886`
 - Seu número: `whatsapp:+55628323110`
 - Código de join: `join shadow-horn.`
@@ -24,6 +25,7 @@ https://flowcloser-agent-production.up.railway.app/api/webhooks/whatsapp/twilio
 ```
 
 **O que fazer:**
+
 1. Na seção **"Sandbox Configuration"**
 2. No campo **"When a message comes in"**, altere para:
    ```

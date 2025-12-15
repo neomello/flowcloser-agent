@@ -74,6 +74,7 @@ Certifique-se de que estas variáveis estão no Railway:
 ## 🔍 Como Verificar se Está Configurado
 
 ### Via Dashboard:
+
 1. Vá em **Variables** no Railway
 2. Procure pelas variáveis `TWILIO_*`
 3. Se não estiverem lá, adicione
