@@ -11,7 +11,7 @@ TWILIO_ACCOUNT_SID=VAc6f88fda44ff04f63a56daad4a7b7e9a  # ❌ Isso é Service SID
 
 **Correto:**
 ```env
-TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  # ✅ Account SID (já estava correto antes!)
+TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  # ✅ Account SID (formato correto)
 ```
 
 ---
@@ -50,13 +50,11 @@ Mas o mais fácil é ver no dashboard mesmo.
 
 ## ✅ Correção Rápida
 
-Você já tinha o Account SID correto antes! É: `ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
-
 Basta corrigir o `.env`:
 
 ```env
 # ❌ ERRADO (Service SID)
-TWILIO_ACCOUNT_SID=VAc6f88fda44ff04f63a56daad4a7b7e9a
+TWILIO_ACCOUNT_SID=VAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # ✅ CORRETO (Account SID)
 TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -92,7 +90,7 @@ twilio profiles:create
 
 ## 📝 Resumo
 
-1. ✅ Account SID correto: `ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` (já estava no .env antes)
-2. ❌ Service SID: `VAc6f88fda44ff04f63a56daad4a7b7e9a` (não usar para autenticação)
-3. ✅ Auth Token: `your_auth_token_here` (está correto)
+1. ✅ Account SID correto: `ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` (formato correto)
+2. ❌ Service SID: `VAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` (não usar para autenticação)
+3. ✅ Auth Token: `your_auth_token_here` (obtenha no console do Twilio)
 
