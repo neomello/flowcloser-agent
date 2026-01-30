@@ -326,7 +326,7 @@ export function extractLeadDataFromMessage(
 	company?: string;
 } {
 	const msg = message.toLowerCase();
-	const fullText = conversationHistory 
+	const fullText = conversationHistory
 		? [...conversationHistory.map(m => m.content), message].join(" ").toLowerCase()
 		: msg;
 
@@ -370,16 +370,16 @@ export function extractLeadDataFromMessage(
 
 	// Tentar extrair nome (padrões comuns)
 	const namePatterns = [
-		/meu nome é (\w+)/i,
-		/eu sou (\w+)/i,
-		/chamo-me (\w+)/i,
-		/sou o (\w+)/i,
-		/sou a (\w+)/i,
+		/meu nome é ([\p{L}\s]+)/iu,
+		/eu sou ([\p{L}\s]+)/iu,
+		/chamo-me ([\p{L}\s]+)/iu,
+		/sou o ([\p{L}\s]+)/iu,
+		/sou a ([\p{L}\s]+)/iu,
 	];
 	for (const pattern of namePatterns) {
 		const match = message.match(pattern);
 		if (match && match[1]) {
-			extracted.name = match[1];
+			extracted.name = match[1].trim();
 			break;
 		}
 	}
